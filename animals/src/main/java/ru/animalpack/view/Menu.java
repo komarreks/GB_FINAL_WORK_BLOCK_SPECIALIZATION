@@ -1,12 +1,16 @@
 package ru.animalpack.view;
 
+import ru.animalpack.controller.Repository;
+
 import java.util.Scanner;
 
 public class Menu {
     private Boolean exit;
+    private Repository repository;
 
     public Menu(){
         exit = false;
+        repository = new Repository();
     }
 
     public void showMenu(){

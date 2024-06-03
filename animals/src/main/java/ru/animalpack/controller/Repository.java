@@ -1,18 +1,46 @@
 package ru.animalpack.controller;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import ru.animalpack.model.root.Animals;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Repository {
     private List<Animals> animals;
 
-    public Repository() {
+    public Repository()  {
         animals = new ArrayList<>();
+
+        try {
+            LoadData();
+        }catch (IOException e){
+            try {
+                saveData();
+                LoadData();
+            }catch (IOException e1){
+                System.out.println("в процессе инициализации БД произошла ошибка: "+e1.getMessage());
+            }
+        }
     }
 
-    public void LoadData(){
+    public void LoadData() throws IOException {
+        String path = "animals.json";
 
+        ObjectMapper mapper = new ObjectMapper();
+
+        animals = mapper.readValue(new File(path), new TypeReference<List<Animals>>(){});
+    }
+
+    public void saveData() throws IOException {
+        String path = "animals.json";
+        File file = new File(path);
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        mapper.writeValue(file, animals);
     }
 }
