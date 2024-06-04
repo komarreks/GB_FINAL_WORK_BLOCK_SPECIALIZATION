@@ -19,6 +19,18 @@ public abstract class Animals {
     String breed;
     String ruCustomClass;
 
+    public String getRuCustomClass(){
+        return ruCustomClass;
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public int getCountCommands(){
+        return commands.size();
+    }
+
     public void addCommand(String command) {
         if (!commands.contains(command)){
             commands.add(command);
@@ -28,7 +40,7 @@ public abstract class Animals {
         }
     }
 
-    private String getCommandsAsString(){
+    public String getCommandsAsString(){
         if (commands.size() == 0){
             return "Животное ничему не обучено";
         }

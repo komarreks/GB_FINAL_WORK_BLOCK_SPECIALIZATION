@@ -28,9 +28,9 @@ public class Menu {
     public void showMenu(){
         System.out.flush();
         System.out.println("            ПРОГРАММА УЧЕТА ЖИВОТНЫХ");
-        System.out.println("****************************************************");
-        System.out.println("| add (добавить) | all (вывести всех) | exit (выйти)");
-        System.out.println("****************************************************");
+        System.out.println("********************************************************************************");
+        System.out.println("| add (добавить) | all (вывести всех) | show c (команды животного) |exit (выйти)");
+        System.out.println("********************************************************************************");
         System.out.print("Введите команду: ");
         commandListener();
     }
@@ -50,7 +50,17 @@ public class Menu {
             addAnimal();
         } else if (command.equals("all")) {
             repository.showAll();
-        } else {
+            System.out.println("Нажмите любую клавишу");
+            new Scanner(System.in).nextLine();
+        }else if (command.equals("show c")){
+            repository.showAll();
+            System.out.print("Напишите номер животного, чьи навыки вы хотите увидеть: ");
+            int number =  new Scanner(System.in).nextInt();
+            repository.showSkills(number);
+            System.out.println("Нажмите любую клавишу");
+            new Scanner(System.in).nextLine();
+        }
+        else {
             System.out.println("Проверьте ввод, команда не распознана, нажмите любую клавишу для продолжения");
             new Scanner(System.in).nextLine();
         }

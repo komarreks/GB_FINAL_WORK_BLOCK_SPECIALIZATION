@@ -91,7 +91,24 @@ public class Repository {
             System.out.println(animal.toString());
         }
         System.out.println("*******************************************************");
-        System.out.println("Нажмите любую клавишу");
-        new Scanner(System.in).nextLine();
+
+    }
+
+    public void showSkills(int number){
+        for (Animals animal : animals) {
+            if (animal.getId() == number){
+                StringBuilder sb = new StringBuilder();
+                sb.append(animal.getRuCustomClass() + " по кличке: " + animal.getName()+"\n");
+
+                if (animal.getCountCommands() > 0){
+                    sb.append("умеет выполнять следующие команды:\n");
+                }
+                sb.append(animal.getCommandsAsString());
+                System.out.println(sb.toString());
+                return;
+            }
+        }
+
+        System.out.println("Животного с таким номером нет");
     }
 }
