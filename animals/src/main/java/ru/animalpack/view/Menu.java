@@ -15,6 +15,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Year;
+import java.time.YearMonth;
 import java.util.*;
 
 public class Menu {
@@ -31,6 +32,8 @@ public class Menu {
         System.out.println("            ПРОГРАММА УЧЕТА ЖИВОТНЫХ");
         System.out.println("************************************************************************************************************");
         System.out.println("| add (добавить) | all (вывести всех) | show s (команды животного) | add s (добавить команду) | exit (выйти)");
+        System.out.println("************************************************************************************************************");
+        System.out.println("| Всего животных: "+repository.countAnimals());
         System.out.println("************************************************************************************************************");
         System.out.print("Введите команду: ");
         commandListener();
@@ -169,7 +172,9 @@ public class Menu {
 
         Calendar calendar = new GregorianCalendar();
         calendar.set(Integer.valueOf(year), Integer.valueOf(month),1);
-        int maximumDay = calendar.getActualMaximum(Integer.valueOf(month));
+        //int maximumDay = calendar.getActualMaximum(Integer.valueOf(month));
+
+        int maximumDay = YearMonth.of(Integer.valueOf(year),Integer.valueOf(month)).lengthOfMonth();
 
         if (year.equals(String.valueOf(now)) && LocalDate.now().getMonth().getValue() == Integer.valueOf(month)){
             maximumDay = LocalDate.now().getDayOfMonth();
