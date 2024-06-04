@@ -7,7 +7,7 @@ public class Camel extends PackAnimals {
     int humps;
 
     public Camel(int id) {
-        super(id);
+        super(id, "Верблюд");
         this.humps = Integer.valueOf(Menu.enterDigitValue("Укажите количество горбов у верблюда",1,2,"Такого не бывает"));
     }
 }

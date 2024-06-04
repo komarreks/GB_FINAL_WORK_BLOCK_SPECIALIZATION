@@ -6,10 +6,7 @@ import ru.animalpack.model.root.Animals;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class Repository {
     private List<Animals> animals;
@@ -50,9 +47,27 @@ public class Repository {
         return animals.size();
     }
 
+    public void add(Animals animal) {
+        animals.add(animal);
+    }
+
     public int getNextAnimalID() {
+        if (countAnimals() == 0){
+            return 1;
+        }
+
         Collections.sort(animals, (a1, a2) -> a1.getId() - a2.getId());
 
         return animals.get(animals.size() - 1).getId() + 1;
+    }
+
+    public void showAll(){
+        System.out.println("*******************************************************");
+        for (Animals animal : animals) {
+            System.out.println(animal.toString());
+        }
+        System.out.println("*******************************************************");
+        System.out.println("Нажмите любую клавишу");
+        new Scanner(System.in).nextLine();
     }
 }

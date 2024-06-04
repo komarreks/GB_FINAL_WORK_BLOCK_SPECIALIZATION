@@ -13,6 +13,7 @@ public abstract class Animals {
     List<String> commands;
     String color;
     String breed;
+    String ruCustomClass;
 
     public void addCommand(String command) {
         if (!commands.contains(command)){
@@ -23,16 +24,24 @@ public abstract class Animals {
         }
     }
 
-    public Animals(int id){
-        this.id        = id;
-        this.name      = Menu.enterStringValue("Укажите кличку");
-        this.birthDate = Menu.enterDate();
-        this.color     = Menu.enterStringValue("Укажите цвет в свободной форме");
-        this.breed     = Menu.enterStringValue("Укажите породу");
-        this.commands  = Menu.enterStringList("Укажите, какие команды умеет выполнять животное, вводите команды через пробел");
+    public Animals(int id, String ruCustomClass){
+        this.id            = id;
+        this.name          = Menu.enterStringValue("Укажите кличку");
+        this.birthDate     = Menu.enterDate();
+        this.color         = Menu.enterStringValue("Укажите цвет в свободной форме");
+        this.breed         = Menu.enterStringValue("Укажите породу");
+        this.commands      = Menu.enterStringList("Укажите, какие команды умеет выполнять животное, вводите команды через пробел");
+        this.ruCustomClass = ruCustomClass;
     }
 
     public int getId(){
         return id;
+    }
+
+    @Override
+    public String toString() {
+        return "Номер: "+id+ " ("+ruCustomClass+")" +
+                " Кличка: "+ name+
+                " Дата рождения: "+ birthDate;
     }
 }

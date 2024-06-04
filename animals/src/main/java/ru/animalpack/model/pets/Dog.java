@@ -7,7 +7,7 @@ public class Dog extends Pets {
     Boolean decorative;
 
     public Dog(int id) {
-        super(id);
+        super(id, "Собака");
         this.decorative = Menu.enterAnswer("Собака декоративной породы? [д/н]");
     }
 }

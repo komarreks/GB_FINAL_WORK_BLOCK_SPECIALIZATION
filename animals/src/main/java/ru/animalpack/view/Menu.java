@@ -1,6 +1,12 @@
 package ru.animalpack.view;
 
 import ru.animalpack.controller.Repository;
+import ru.animalpack.model.packanimals.Camel;
+import ru.animalpack.model.packanimals.Donkey;
+import ru.animalpack.model.packanimals.Horse;
+import ru.animalpack.model.pets.Cat;
+import ru.animalpack.model.pets.Dog;
+import ru.animalpack.model.pets.Hamster;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -22,9 +28,9 @@ public class Menu {
     public void showMenu(){
         System.out.flush();
         System.out.println("            ПРОГРАММА УЧЕТА ЖИВОТНЫХ");
-        System.out.println("**************************************************");
-        System.out.println("| add (добавить) | exit (выйти) |                 ");
-        System.out.println("**************************************************");
+        System.out.println("****************************************************");
+        System.out.println("| add (добавить) | exit (выйти) | all (вывести всех)");
+        System.out.println("****************************************************");
         System.out.print("Введите команду: ");
         commandListener();
     }
@@ -35,9 +41,36 @@ public class Menu {
         if (command.equals("exit")){
             System.out.println("До скорых встреч!");
             exit = true;
-        }else {
+        } else if (command.equals("add")) {
+            addAnimal();
+        } else if (command.equals("all")) {
+            repository.showAll();
+        } else {
             System.out.println("Проверьте ввод, команда не распознана, нажмите любую клавишу для продолжения");
             new Scanner(System.in).nextLine();
+        }
+    }
+
+    private void addAnimal(){
+        System.out.println("Укажите кого вы хотите добавить:\n" +
+                "1 - Собака\n" +
+                "2 - Кошка\n" +
+                "3 - Хомяк\n" +
+                "4 - Лошадь\n" +
+                "5 - Верблюд\n" +
+                "6 - Осел");
+
+        int number = new Scanner(System.in).nextInt();
+
+        switch (number){
+            case 1: {repository.add(new Dog(repository.getNextAnimalID())); break;}
+            case 2: {repository.add(new Cat(repository.getNextAnimalID())); break;}
+            case 3: {repository.add(new Hamster(repository.getNextAnimalID())); break;}
+            case 4: {repository.add(new Horse(repository.getNextAnimalID())); break;}
+            case 5: {repository.add(new Camel(repository.getNextAnimalID())); break;}
+            case 6: {repository.add(new Donkey(repository.getNextAnimalID())); break;}
+            default:
+                System.out.println("Такого типа животных не предусмотрено");
         }
     }
 

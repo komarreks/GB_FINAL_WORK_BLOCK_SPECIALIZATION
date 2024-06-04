@@ -7,7 +7,7 @@ public class Horse extends PackAnimals {
     Boolean pony;
 
     public Horse(int id) {
-        super(id);
+        super(id, "Лошадь");
         this.pony = Menu.enterAnswer("Это лошадь пони? [д/н]");
     }
 }
