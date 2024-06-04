@@ -2,6 +2,9 @@ package ru.animalpack.model.root;
 
 import ru.animalpack.view.Menu;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
@@ -24,14 +27,46 @@ public abstract class Animals {
         }
     }
 
+    private String getCommandsAsString(){
+        StringBuilder sb = new StringBuilder();
+        String comma = "";
+        for (String command : commands){
+            sb.append(comma+command);
+            comma = ", ";
+        }
+
+        return sb.toString();
+    }
+
+    private String getDataAsString(){
+        return birthDate.getDay()+"/"+birthDate.getMonth()+"/"+birthDate.getYear();
+    }
+
     public Animals(int id, String ruCustomClass){
         this.id            = id;
         this.name          = Menu.enterStringValue("Укажите кличку");
         this.birthDate     = Menu.enterDate();
         this.color         = Menu.enterStringValue("Укажите цвет в свободной форме");
         this.breed         = Menu.enterStringValue("Укажите породу");
-        this.commands      = Menu.enterStringList("Укажите, какие команды умеет выполнять животное, вводите команды через пробел");
+        this.commands      = Menu.enterStringList("Укажите, какие команды умеет выполнять животное, вводите команды через запятую");
         this.ruCustomClass = ruCustomClass;
+    }
+
+    public Animals(String[] description){
+        ruCustomClass = description[0];
+        id = Integer.parseInt(description[1]);
+        name = description[2];
+
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            birthDate = dateFormat.parse(description[3]);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+        color = description[4];
+
+        commands = List.of(description[5].split(", "));//Menu.enterStringList(description[5]);
     }
 
     public int getId(){
@@ -43,5 +78,14 @@ public abstract class Animals {
         return "Номер: "+id+ " ("+ruCustomClass+")" +
                 " Кличка: "+ name+
                 " Дата рождения: "+ birthDate;
+    }
+
+    public String getStringForSave(){
+        return ruCustomClass+"&"+
+               id+"&"+
+               name+"&"+
+               getDataAsString()+"&"+
+               color+"&"+
+               getCommandsAsString();
     }
 }

@@ -10,4 +10,14 @@ public class Camel extends PackAnimals {
         super(id, "Верблюд");
         this.humps = Integer.valueOf(Menu.enterDigitValue("Укажите количество горбов у верблюда",1,2,"Такого не бывает"));
     }
+
+    public Camel(String[] description){
+        super(description);
+        humps = Integer.valueOf(description[7]);
+    }
+
+    @Override
+    public String getStringForSave() {
+        return super.getStringForSave()+"&"+humps;
+    }
 }

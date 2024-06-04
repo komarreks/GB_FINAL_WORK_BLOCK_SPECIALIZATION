@@ -8,6 +8,7 @@ import ru.animalpack.model.pets.Cat;
 import ru.animalpack.model.pets.Dog;
 import ru.animalpack.model.pets.Hamster;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -29,7 +30,7 @@ public class Menu {
         System.out.flush();
         System.out.println("            ПРОГРАММА УЧЕТА ЖИВОТНЫХ");
         System.out.println("****************************************************");
-        System.out.println("| add (добавить) | exit (выйти) | all (вывести всех)");
+        System.out.println("| add (добавить) | all (вывести всех) | exit (выйти)");
         System.out.println("****************************************************");
         System.out.print("Введите команду: ");
         commandListener();
@@ -39,6 +40,11 @@ public class Menu {
         String command = new Scanner(System.in).nextLine();
 
         if (command.equals("exit")){
+            try {
+                repository.saveData();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             System.out.println("До скорых встреч!");
             exit = true;
         } else if (command.equals("add")) {
@@ -143,7 +149,7 @@ public class Menu {
     public static List<String> enterStringList(String message){
         String stringOfCommand = enterStringValue(message);
 
-        List<String> list = List.of(stringOfCommand.split(" "));
+        List<String> list = List.of(stringOfCommand.split(", "));
 
         return list;
     }

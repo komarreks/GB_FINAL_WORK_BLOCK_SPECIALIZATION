@@ -10,4 +10,14 @@ public class Horse extends PackAnimals {
         super(id, "Лошадь");
         this.pony = Menu.enterAnswer("Это лошадь пони? [д/н]");
     }
+
+    public Horse(String[] description) {
+        super(description);
+        pony = Boolean.valueOf(description[7]);
+    }
+
+    @Override
+    public String getStringForSave() {
+        return super.getStringForSave()+"&"+pony;
+    }
 }

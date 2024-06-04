@@ -11,8 +11,18 @@ public class Cat extends Pets {
         this.standartSize = Menu.enterAnswer("Кошка стандартного размера? [д/н]");
     }
 
+    public Cat(String[] description){
+        super(description);
+        standartSize = Boolean.valueOf(description[7]);
+    }
+
     @Override
     public String toString() {
         return super.toString();
+    }
+
+    @Override
+    public String getStringForSave() {
+        return super.getStringForSave()+"&"+standartSize;
     }
 }

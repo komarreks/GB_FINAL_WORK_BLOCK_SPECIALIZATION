@@ -10,4 +10,14 @@ public abstract class PackAnimals extends Animals{
         super(id, ruCustomClass);
         this.purpose = Menu.enterStringValue("Напишите для чего используется животное");
     }
+
+    public PackAnimals(String[] description) {
+        super(description);
+        purpose = description[6];
+    }
+
+    @Override
+    public String getStringForSave() {
+        return super.getStringForSave()+"&"+this.purpose;
+    }
 }

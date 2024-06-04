@@ -1,11 +1,14 @@
 package ru.animalpack.controller;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import ru.animalpack.model.packanimals.Camel;
+import ru.animalpack.model.packanimals.Donkey;
+import ru.animalpack.model.packanimals.Horse;
+import ru.animalpack.model.pets.Cat;
+import ru.animalpack.model.pets.Dog;
+import ru.animalpack.model.pets.Hamster;
 import ru.animalpack.model.root.Animals;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 public class Repository {
@@ -27,20 +30,41 @@ public class Repository {
     }
 
     public void LoadData() throws IOException {
-        String path = "animals.json";
+        String path = "animals.txt";
 
-        ObjectMapper mapper = new ObjectMapper();
+        BufferedReader br = new BufferedReader(new FileReader(path));
 
-        animals = mapper.readValue(new File(path), new TypeReference<List<Animals>>(){});
+        String line = br.readLine();
+
+        while (line != null) {
+            String[] animal = line.split("&");
+            switch (animal[0]) {
+                case "Верблюд": {add(new Camel(animal)); break;}
+                case "Осел": {add(new Donkey(animal)); break;}
+                case "Лошадь":{add(new Horse(animal)); break;}
+                case "Кошка":{add(new Cat(animal)); break;}
+                case "Собака":{add(new Dog(animal)); break;}
+                case "Хомяк":{add(new Hamster(animal)); break;}
+            }
+            line = br.readLine();
+        }
+
     }
 
     public void saveData() throws IOException {
-        String path = "animals.json";
+        String path = "animals.txt";
         File file = new File(path);
 
-        ObjectMapper mapper = new ObjectMapper();
+        StringBuilder stringBuilder = new StringBuilder();
 
-        mapper.writeValue(file, animals);
+        for (Animals animal : animals) {
+            stringBuilder.append(animal.getStringForSave()).append("\n");
+        }
+
+        Writer writer = new FileWriter(file);
+
+        writer.write(stringBuilder.toString());
+        writer.close();
     }
 
     public int countAnimals() {

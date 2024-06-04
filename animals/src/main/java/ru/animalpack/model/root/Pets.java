@@ -9,4 +9,14 @@ public abstract class Pets extends Animals{
         super(id, ruCustomClass);
         homeMaintenanceOnly = Menu.enterAnswer("Только для домашнего содержания? [д/н");
     }
+
+    public Pets(String[] description){
+        super(description);
+        homeMaintenanceOnly = Boolean.valueOf(description[6]);
+    }
+
+    @Override
+    public String getStringForSave() {
+        return super.getStringForSave()+"&"+homeMaintenanceOnly;
+    }
 }

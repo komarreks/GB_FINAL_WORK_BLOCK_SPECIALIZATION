@@ -10,4 +10,14 @@ public class Dog extends Pets {
         super(id, "Собака");
         this.decorative = Menu.enterAnswer("Собака декоративной породы? [д/н]");
     }
+
+    public Dog(String[] description) {
+        super(description);
+        decorative = Boolean.valueOf(description[7]);
+    }
+
+    @Override
+    public String getStringForSave() {
+        return super.getStringForSave()+"&"+decorative;
+    }
 }
