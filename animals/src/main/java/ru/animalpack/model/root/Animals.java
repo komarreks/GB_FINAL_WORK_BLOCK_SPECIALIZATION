@@ -101,6 +101,10 @@ public abstract class Animals {
         return id;
     }
 
+    public Date getBirthDate(){
+        return birthDate;
+    }
+
     @Override
     public String toString() {
         return "Номер: "+id+ " ("+ruCustomClass+")" +

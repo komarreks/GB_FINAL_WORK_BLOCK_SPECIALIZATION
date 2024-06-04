@@ -10,6 +10,7 @@ import ru.animalpack.model.root.Animals;
 
 import java.io.*;
 import java.util.*;
+import java.util.function.Consumer;
 
 public class Repository {
     private List<Animals> animals;
@@ -124,5 +125,25 @@ public class Repository {
             sb.append(animal.getCommandsAsString());
             System.out.println(sb.toString());
         }
+    }
+
+    public void getAnimalsCurrentDate(Date date){
+        List<Animals> tempAnimals = new ArrayList<>();
+
+        animals.forEach(a -> {
+            if (a.getBirthDate().equals(date)){
+                System.out.println(a.toString());
+            }
+        });
+    }
+
+    public void getAnimalsDateRange(Date beginDate, Date endDate){
+        List<Animals> tempAnimals = new ArrayList<>();
+
+        animals.forEach(a -> {
+            if (a.getBirthDate().after(beginDate) && a.getBirthDate().before(endDate)){
+                System.out.println(a.toString());
+            }
+        });
     }
 }

@@ -30,9 +30,9 @@ public class Menu {
     public void showMenu(){
         System.out.flush();
         System.out.println("            ПРОГРАММА УЧЕТА ЖИВОТНЫХ");
-        System.out.println("************************************************************************************************************");
-        System.out.println("| add (добавить) | all (вывести всех) | show s (команды животного) | add s (добавить команду) | exit (выйти)");
-        System.out.println("************************************************************************************************************");
+        System.out.println("*******************************************************************************************************************************");
+        System.out.println("| add (добавить) | all (вывести всех) | all d (Вывести по дате рождения) | show s (команды животного) | add s (добавить команду) | exit (выйти)");
+        System.out.println("********************************************************************************************************************************");
         System.out.println("| Всего животных: "+repository.countAnimals());
         System.out.println("************************************************************************************************************");
         System.out.print("Введите команду: ");
@@ -54,7 +54,10 @@ public class Menu {
             addAnimal();
         } else if (command.equals("all")) {
             showAll();
-        }else if (command.equals("show s")){
+        }else if (command.equals("all d")) {
+            allDate();
+        }
+        else if (command.equals("show s")){
             shows();
         }else if (command.equals("add s")) {
             adds();
@@ -111,6 +114,52 @@ public class Menu {
     private void showAll(){
         repository.showAll();
         System.out.println("Нажмите любую клавишу");
+        new Scanner(System.in).nextLine();
+    }
+
+    private void allDate(){
+        System.out.println("1 - определенная дата, 2 - диапазон");
+
+        int value = Integer.valueOf(Menu.enterDigitValue("Введите",1,2,"Нужно указать 1 или 2"));
+
+        switch (value){
+            case 1:{showAllCurrentDate(); break;}
+            case 2:{showAllFromDateRange(); break;}
+            default: {
+                System.out.println("указан неверный вариант");
+            }
+        }
+    }
+
+    private void showAllCurrentDate(){
+        Date date = enterDateForFilter("Введите дату в виде дд.мм.гггг: ");
+        System.out.println();
+        System.out.println("Список животных по дате рождения:");
+        System.out.println("=================================");
+
+        if (date != null){
+            repository.getAnimalsCurrentDate(date);
+        }
+
+        System.out.println("=================================");
+        System.out.println("нажмите лююбую клавишу");
+        new Scanner(System.in).nextLine();
+    }
+
+    private void showAllFromDateRange(){
+        Date beginDate = enterDateForFilter("Введите дату начала в виде дд.мм.гггг: ");
+        Date endDate   = enterDateForFilter("Введите дату окончания в виде дд.мм.гггг: ");
+
+        System.out.println();
+        System.out.println("Список животных по дате рождения в диапазоне:");
+        System.out.println("=================================");
+
+        if (beginDate != null && endDate != null){
+            repository.getAnimalsDateRange(beginDate, endDate);
+        }
+
+        System.out.println("=================================");
+        System.out.println("нажмите лююбую клавишу");
         new Scanner(System.in).nextLine();
     }
 
@@ -189,6 +238,26 @@ public class Menu {
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static Date enterDateForFilter(String message){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+        System.out.print(message);
+        String value = new Scanner(System.in).nextLine();
+
+        String regex = "\\d{2}.\\d{2}.\\d{4}";
+
+        if (value.matches(regex)){
+            try {
+                return sdf.parse(value);
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+        }else {
+            System.out.println("дата введена неверно");
+        }
+
+        return null;
     }
 
     public static List<String> enterStringList(String message){
