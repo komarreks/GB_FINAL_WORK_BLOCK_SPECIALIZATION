@@ -1,7 +1,10 @@
 package ru.animalpack.model.root;
 
+import ru.animalpack.view.Menu;
+
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 
 public abstract class Animals {
     String name;
@@ -17,5 +20,13 @@ public abstract class Animals {
         }else {
             System.out.println("Такая команда уже есть");
         }
+    }
+
+    public Animals(){
+        this.name      = Menu.enterStringValue("Укажите кличку");
+        this.birthDate = Menu.enterDate();
+        this.color     = Menu.enterStringValue("Укажите цвет в свободной форме");
+        this.breed     = Menu.enterStringValue("Укажите породу");
+        this.commands  = Menu.enterStringList("Укажите, какие команды умеет выполнять животное, вводите команды через пробел");
     }
 }
