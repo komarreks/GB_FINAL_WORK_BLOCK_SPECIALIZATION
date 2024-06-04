@@ -114,4 +114,20 @@ public class Menu {
 
         return list;
     }
+
+    public static Boolean enterAnswer(String message){
+        String answer = "";
+
+        while (answer.isBlank()){
+            answer = enterStringValue(message);
+            if (answer.toLowerCase().equals("д")){
+                return true;
+            } else if (answer.toLowerCase().equals("н")) {
+                return false;
+            }
+
+            answer = "";
+        }
+        return null;
+    }
 }

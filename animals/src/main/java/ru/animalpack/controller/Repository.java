@@ -7,6 +7,8 @@ import ru.animalpack.model.root.Animals;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Repository {
@@ -42,5 +44,15 @@ public class Repository {
         ObjectMapper mapper = new ObjectMapper();
 
         mapper.writeValue(file, animals);
+    }
+
+    public int countAnimals() {
+        return animals.size();
+    }
+
+    public int getNextAnimalID() {
+        Collections.sort(animals, (a1, a2) -> a1.getId() - a2.getId());
+
+        return animals.get(animals.size() - 1).getId() + 1;
     }
 }
