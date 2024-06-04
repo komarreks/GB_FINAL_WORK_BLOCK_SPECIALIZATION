@@ -38,8 +38,14 @@ public abstract class Animals {
         return sb.toString();
     }
 
-    private String getDataAsString(){
-        return birthDate.getDay()+"/"+birthDate.getMonth()+"/"+birthDate.getYear();
+    private String getDataAsString(Boolean forPrint){
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+        if (forPrint){
+            sdf = new SimpleDateFormat("dd MMMM yyyy");
+        }
+
+        return sdf.format(birthDate);
     }
 
     public Animals(int id, String ruCustomClass){
@@ -77,14 +83,14 @@ public abstract class Animals {
     public String toString() {
         return "Номер: "+id+ " ("+ruCustomClass+")" +
                 " Кличка: "+ name+
-                " Дата рождения: "+ birthDate;
+                " Дата рождения: "+ getDataAsString(true);
     }
 
     public String getStringForSave(){
         return ruCustomClass+"&"+
                id+"&"+
                name+"&"+
-               getDataAsString()+"&"+
+               getDataAsString(false)+"&"+
                color+"&"+
                getCommandsAsString();
     }
