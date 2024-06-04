@@ -13,7 +13,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.Month;
 import java.time.Year;
 import java.util.*;
 
@@ -84,12 +83,16 @@ public class Menu {
         return exit;
     }
 
-    public static String enterStringValue(String message){
+    public static String enterStringValue(String message, boolean mayBeEmpty){
         String value = "";
 
         while (value.isEmpty()){
             System.out.print(message+": ");
             value = (new Scanner(System.in)).nextLine();
+
+            if (value.isEmpty() && mayBeEmpty){
+                return value;
+            }
         }
 
         return value;
@@ -147,7 +150,7 @@ public class Menu {
     }
 
     public static List<String> enterStringList(String message){
-        String stringOfCommand = enterStringValue(message);
+        String stringOfCommand = enterStringValue(message, true);
 
         List<String> list = List.of(stringOfCommand.split(", "));
 
@@ -158,7 +161,7 @@ public class Menu {
         String answer = "";
 
         while (answer.isBlank()){
-            answer = enterStringValue(message);
+            answer = enterStringValue(message, false);
             if (answer.toLowerCase().equals("д")){
                 return true;
             } else if (answer.toLowerCase().equals("н")) {

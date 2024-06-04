@@ -5,6 +5,7 @@ import ru.animalpack.view.Menu;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
@@ -28,6 +29,10 @@ public abstract class Animals {
     }
 
     private String getCommandsAsString(){
+        if (commands.size() == 0){
+            return "Животное ничему не обучено";
+        }
+
         StringBuilder sb = new StringBuilder();
         String comma = "";
         for (String command : commands){
@@ -50,10 +55,10 @@ public abstract class Animals {
 
     public Animals(int id, String ruCustomClass){
         this.id            = id;
-        this.name          = Menu.enterStringValue("Укажите кличку");
+        this.name          = Menu.enterStringValue("Укажите кличку", false);
         this.birthDate     = Menu.enterDate();
-        this.color         = Menu.enterStringValue("Укажите цвет в свободной форме");
-        this.breed         = Menu.enterStringValue("Укажите породу");
+        this.color         = Menu.enterStringValue("Укажите цвет в свободной форме", false);
+        this.breed         = Menu.enterStringValue("Укажите породу", false);
         this.commands      = Menu.enterStringList("Укажите, какие команды умеет выполнять животное, вводите команды через запятую");
         this.ruCustomClass = ruCustomClass;
     }
@@ -72,7 +77,11 @@ public abstract class Animals {
 
         color = description[4];
 
-        commands = List.of(description[5].split(", "));//Menu.enterStringList(description[5]);
+        commands = new ArrayList<>();
+        if (!description[5].equals("Животное ничему не обучено")){
+            commands = List.of(description[5].split(", "));
+        }
+
     }
 
     public int getId(){

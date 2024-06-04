@@ -8,7 +8,7 @@ public abstract class PackAnimals extends Animals{
 
     public PackAnimals(int id, String ruCustomClass) {
         super(id, ruCustomClass);
-        this.purpose = Menu.enterStringValue("Напишите для чего используется животное");
+        this.purpose = Menu.enterStringValue("Напишите для чего используется животное", false);
     }
 
     public PackAnimals(String[] description) {

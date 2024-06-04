@@ -7,7 +7,7 @@ public abstract class Pets extends Animals{
 
     public Pets(int id, String ruCustomClass){
         super(id, ruCustomClass);
-        homeMaintenanceOnly = Menu.enterAnswer("Только для домашнего содержания? [д/н");
+        homeMaintenanceOnly = Menu.enterAnswer("Только для домашнего содержания? [д/н]");
     }
 
     public Pets(String[] description){
