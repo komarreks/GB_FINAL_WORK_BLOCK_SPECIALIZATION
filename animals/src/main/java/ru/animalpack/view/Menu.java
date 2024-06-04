@@ -7,6 +7,7 @@ import ru.animalpack.model.packanimals.Horse;
 import ru.animalpack.model.pets.Cat;
 import ru.animalpack.model.pets.Dog;
 import ru.animalpack.model.pets.Hamster;
+import ru.animalpack.model.root.Animals;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -28,9 +29,9 @@ public class Menu {
     public void showMenu(){
         System.out.flush();
         System.out.println("            ПРОГРАММА УЧЕТА ЖИВОТНЫХ");
-        System.out.println("********************************************************************************");
-        System.out.println("| add (добавить) | all (вывести всех) | show c (команды животного) |exit (выйти)");
-        System.out.println("********************************************************************************");
+        System.out.println("************************************************************************************************************");
+        System.out.println("| add (добавить) | all (вывести всех) | show s (команды животного) | add s (добавить команду) | exit (выйти)");
+        System.out.println("************************************************************************************************************");
         System.out.print("Введите команду: ");
         commandListener();
     }
@@ -49,19 +50,30 @@ public class Menu {
         } else if (command.equals("add")) {
             addAnimal();
         } else if (command.equals("all")) {
-            repository.showAll();
-            System.out.println("Нажмите любую клавишу");
-            new Scanner(System.in).nextLine();
-        }else if (command.equals("show c")){
-            repository.showAll();
-            System.out.print("Напишите номер животного, чьи навыки вы хотите увидеть: ");
-            int number =  new Scanner(System.in).nextInt();
-            repository.showSkills(number);
-            System.out.println("Нажмите любую клавишу");
+            showAll();
+        }else if (command.equals("show s")){
+            shows();
+        }else if (command.equals("add s")) {
+            adds();
+        }else {
+            System.out.println("Проверьте ввод, команда не распознана, нажмите любую клавишу для продолжения");
             new Scanner(System.in).nextLine();
         }
-        else {
-            System.out.println("Проверьте ввод, команда не распознана, нажмите любую клавишу для продолжения");
+    }
+
+    private void adds() {
+        System.out.println();
+        System.out.println("Какому животному вы хотите добавить команду?");
+        repository.showAll();
+        System.out.println("________________________________________________________________________");
+        System.out.print("Укажите номер:");
+        int number = new Scanner(System.in).nextInt();
+        Animals animal = repository.findAnimal(number);
+
+        if (animal != null){
+            String value = Menu.enterStringValue("Напишите команду", false);
+            animal.addCommand(value);
+            System.out.println("Нажмите любую клавишу");
             new Scanner(System.in).nextLine();
         }
     }
@@ -91,6 +103,21 @@ public class Menu {
 
     public Boolean getExit() {
         return exit;
+    }
+
+    private void showAll(){
+        repository.showAll();
+        System.out.println("Нажмите любую клавишу");
+        new Scanner(System.in).nextLine();
+    }
+
+    private void shows(){
+        repository.showAll();
+        System.out.print("Напишите номер животного, чьи навыки вы хотите увидеть: ");
+        int number =  new Scanner(System.in).nextInt();
+        repository.showSkills(number);
+        System.out.println("Нажмите любую клавишу");
+        new Scanner(System.in).nextLine();
     }
 
     public static String enterStringValue(String message, boolean mayBeEmpty){
@@ -162,7 +189,10 @@ public class Menu {
     public static List<String> enterStringList(String message){
         String stringOfCommand = enterStringValue(message, true);
 
-        List<String> list = List.of(stringOfCommand.split(", "));
+        List<String> list = new ArrayList<>();
+        String[] strings = stringOfCommand.split(", ");
+
+        list.addAll(Arrays.stream(strings).toList());
 
         return list;
     }

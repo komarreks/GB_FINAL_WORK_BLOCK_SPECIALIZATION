@@ -94,21 +94,35 @@ public class Repository {
 
     }
 
-    public void showSkills(int number){
+    public Animals findAnimal(int number){
         for (Animals animal : animals) {
             if (animal.getId() == number){
-                StringBuilder sb = new StringBuilder();
-                sb.append(animal.getRuCustomClass() + " по кличке: " + animal.getName()+"\n");
-
-                if (animal.getCountCommands() > 0){
-                    sb.append("умеет выполнять следующие команды:\n");
-                }
-                sb.append(animal.getCommandsAsString());
-                System.out.println(sb.toString());
-                return;
+                return animal;
             }
         }
 
         System.out.println("Животного с таким номером нет");
+        return null;
+    }
+
+    public void addSkill(Animals animal, String command){
+        animal.addCommand(command);
+        System.out.println("Команда добавлена");
+    }
+
+    public void showSkills(int number){
+        Animals animal = findAnimal(number);
+
+        if (animal!=null){
+            StringBuilder sb = new StringBuilder();
+            System.out.println();
+            sb.append(animal.getRuCustomClass() + " по кличке: " + animal.getName()+"\n");
+
+            if (animal.getCountCommands() > 0){
+                sb.append("умеет выполнять следующие команды:\n");
+            }
+            sb.append(animal.getCommandsAsString());
+            System.out.println(sb.toString());
+        }
     }
 }
